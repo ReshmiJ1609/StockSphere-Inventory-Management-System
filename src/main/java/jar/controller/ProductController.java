@@ -7,6 +7,8 @@ import jar.StockHistory;
 import jar.StockHistoryRepository;
 
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Sort;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -21,11 +23,12 @@ public class ProductController {
     public ProductController(
             ProductRepository productRepository,
             StockHistoryRepository historyRepository) {
+
         this.productRepository = productRepository;
         this.historyRepository = historyRepository;
     }
 
-    // Save a stock history record
+    // Record stock history
     private void recordHistory(
             Product product,
             String action,
@@ -33,6 +36,7 @@ public class ProductController {
             int newQuantity) {
 
         StockHistory history = new StockHistory();
+
         history.setProductId(product.getId());
         history.setProductName(product.getName());
         history.setAction(action);
@@ -49,9 +53,22 @@ public class ProductController {
         return productRepository.findAll();
     }
 
-    // Add a product
+    // Get stock history (latest records first)
+    @GetMapping("/history")
+    public List<StockHistory> getStockHistory() {
+
+        return historyRepository.findAll(
+                Sort.by(
+                        Sort.Direction.DESC,
+                        "actionDate"
+                )
+        );
+    }
+
+    // Add product
     @PostMapping
     public Product addProduct(@RequestBody Product product) {
+
         Product savedProduct = productRepository.save(product);
 
         recordHistory(
@@ -64,7 +81,7 @@ public class ProductController {
         return savedProduct;
     }
 
-    // Update an existing product
+    // Update product
     @PutMapping("/{id}")
     public Product updateProduct(
             @PathVariable Long id,
@@ -72,7 +89,9 @@ public class ProductController {
 
         Product product = productRepository.findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException("Product not found: " + id));
+                        new RuntimeException(
+                                "Product not found: " + id
+                        ));
 
         int previousQuantity = product.getQuantity();
 
@@ -80,7 +99,6 @@ public class ProductController {
         product.setCategory(updatedProduct.getCategory());
         product.setQuantity(updatedProduct.getQuantity());
         product.setPrice(updatedProduct.getPrice());
-        product.setMinimumStock(updatedProduct.getMinimumStock());
 
         Product savedProduct = productRepository.save(product);
 
@@ -94,13 +112,15 @@ public class ProductController {
         return savedProduct;
     }
 
-    // Delete a product
+    // Delete product
     @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable Long id) {
 
         Product product = productRepository.findById(id)
                 .orElseThrow(() ->
-                        new RuntimeException("Product not found: " + id));
+                        new RuntimeException(
+                                "Product not found: " + id
+                        ));
 
         recordHistory(
                 product,

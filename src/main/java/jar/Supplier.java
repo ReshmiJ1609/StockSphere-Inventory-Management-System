@@ -18,6 +18,7 @@ public class Supplier {
     private String phone;
     private String email;
     private String address;
+    private String productSupplied;
 
     public Supplier() {
     }
@@ -64,5 +65,13 @@ public class Supplier {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public String getProductSupplied() {
+        return productSupplied;
+    }
+
+    public void setProductSupplied(String productSupplied) {
+        this.productSupplied = productSupplied;
     }
 }

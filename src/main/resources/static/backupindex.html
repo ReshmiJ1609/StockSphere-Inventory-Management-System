@@ -1,0 +1,1115 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>StockSphere | Inventory Management</title>
+
+<style>
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: "Segoe UI", Arial, sans-serif;
+}
+
+body {
+    background: #f5f6fc;
+    color: #252344;
+}
+
+button, input, select { font: inherit; }
+button { cursor: pointer; }
+
+[hidden] { display: none !important; }
+
+/* LOGIN PAGE */
+.login-screen {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #211052, #5132a4, #3478e5);
+}
+
+.login-card {
+    width: 100%;
+    max-width: 420px;
+    padding: 38px 32px;
+    border-radius: 22px;
+    background: white;
+    box-shadow: 0 20px 60px rgba(0,0,0,.25);
+}
+
+.login-logo {
+    text-align: center;
+    font-size: 30px;
+    font-weight: 800;
+    color: #5232a3;
+    margin-bottom: 10px;
+}
+
+.login-subtitle {
+    text-align: center;
+    color: #77758d;
+    font-size: 14px;
+    margin-bottom: 28px;
+}
+
+.login-card h2 {
+    text-align: center;
+    margin-bottom: 25px;
+}
+
+.login-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 18px;
+    font-size: 14px;
+    font-weight: 600;
+}
+
+.login-field input {
+    width: 100%;
+    padding: 13px;
+    border: 1px solid #ded9ed;
+    border-radius: 9px;
+    outline: none;
+}
+
+.login-field input:focus {
+    border-color: #7950db;
+    box-shadow: 0 0 0 3px rgba(121,80,219,.12);
+}
+
+.login-button {
+    width: 100%;
+    padding: 13px;
+    border: 0;
+    border-radius: 9px;
+    color: white;
+    background: linear-gradient(90deg,#6741c5,#3478e5);
+    font-weight: 700;
+}
+
+.login-error {
+    color: #b42338;
+    background: #fff0f0;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 15px;
+    font-size: 13px;
+}
+
+.login-footer {
+    margin-top: 22px;
+    text-align: center;
+    color: #888;
+    font-size: 12px;
+}
+
+/* APPLICATION */
+.app {
+    display: flex;
+    min-height: 100vh;
+}
+
+.sidebar {
+    width: 245px;
+    background: linear-gradient(180deg,#30206b,#5132a4);
+    color: white;
+    padding: 25px 15px;
+    flex-shrink: 0;
+}
+
+.brand {
+    font-size: 23px;
+    font-weight: 800;
+    padding: 5px 12px 30px;
+}
+
+.sidebar nav {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.nav-link {
+    display: block;
+    width: 100%;
+    color: #eee8ff;
+    background: transparent;
+    border: 0;
+    text-align: left;
+    text-decoration: none;
+    padding: 13px 14px;
+    border-radius: 10px;
+    font-size: 14px;
+    transition: .2s;
+}
+
+.nav-link:hover, .nav-link.active {
+    background: rgba(255,255,255,.18);
+    color: white;
+}
+
+.main {
+    min-width: 0;
+    flex: 1;
+    padding: 25px;
+}
+
+.topbar {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 25px;
+}
+
+.user-info { font-weight: 600; }
+
+.logout {
+    background: #eee8ff;
+    color: #5634a5;
+    border: 0;
+    border-radius: 8px;
+    padding: 9px 14px;
+    font-weight: 600;
+}
+
+.page-header { margin-bottom: 25px; }
+.page-header h1 { font-size: 27px; margin-bottom: 8px; }
+.page-header p { color: #77758d; font-size: 14px; }
+
+.stats-grid {
+    display: grid;
+    grid-template-columns: repeat(4,minmax(0,1fr));
+    gap: 18px;
+    margin-bottom: 28px;
+}
+
+.stat-card {
+    background: white;
+    padding: 22px;
+    border-radius: 15px;
+    box-shadow: 0 4px 18px rgba(40,30,90,.06);
+    border-left: 4px solid #7549db;
+}
+
+.stat-label {
+    color: #77758d;
+    font-size: 13px;
+    margin-bottom: 12px;
+}
+
+.stat-value {
+    font-size: 25px;
+    font-weight: 800;
+    overflow-wrap: anywhere;
+}
+
+.panel {
+    background: white;
+    padding: 22px;
+    border-radius: 15px;
+    box-shadow: 0 4px 18px rgba(40,30,90,.06);
+    margin-bottom: 22px;
+}
+
+.panel-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 18px;
+}
+
+.panel-heading h2, .panel h2 { font-size: 19px; }
+
+.toolbar {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 18px;
+}
+
+.toolbar input, .toolbar select,
+.form-grid input, .form-grid select {
+    min-width: 0;
+    width: 100%;
+    padding: 11px 12px;
+    border: 1px solid #ded9ed;
+    border-radius: 8px;
+    outline: none;
+    background: white;
+}
+
+input:focus, select:focus {
+    border-color: #7950db;
+    box-shadow: 0 0 0 2px rgba(121,80,219,.1);
+}
+
+.toolbar .search { flex: 1; min-width: 180px; }
+
+.btn {
+    padding: 10px 15px;
+    border: 0;
+    border-radius: 8px;
+    font-weight: 600;
+}
+
+.btn-primary { background: #6741c5; color: white; }
+.btn-primary:hover { background: #5230a7; }
+.btn-secondary { background: #eee9fa; color: #5634a5; }
+.btn-danger { background: #ffe8eb; color: #c02e48; }
+
+.btn-small {
+    padding: 7px 10px;
+    font-size: 12px;
+    margin: 2px;
+}
+
+.table-wrap { width: 100%; overflow-x: auto; }
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    white-space: nowrap;
+}
+
+th, td {
+    text-align: left;
+    padding: 14px 12px;
+    border-bottom: 1px solid #eeeaf5;
+    font-size: 13px;
+}
+
+th {
+    color: #6b6386;
+    background: #faf9fe;
+    font-weight: 700;
+}
+
+tbody tr:hover { background: #fcfbff; }
+
+.empty-message {
+    color: #77758d;
+    padding: 22px 10px;
+    text-align: center;
+}
+
+.form-grid {
+    display: grid;
+    grid-template-columns: repeat(2,minmax(0,1fr));
+    gap: 15px;
+    margin: 18px 0;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+.form-actions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+.status {
+    display: inline-block;
+    padding: 5px 9px;
+    border-radius: 20px;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.status-low { background: #fff0d7; color: #a35c00; }
+.status-ok { background: #dff7e8; color: #187843; }
+
+.settings-card {
+    max-width: 750px;
+    padding: 25px;
+    background: white;
+    border-radius: 16px;
+    box-shadow: 0 4px 18px rgba(60,40,120,.10);
+}
+
+.settings-card h2 { margin-bottom: 22px; color: #5936b4; }
+
+.settings-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+    padding: 18px 12px;
+    border-bottom: 1px solid #eee8fa;
+}
+
+.settings-row:last-child { border-bottom: none; }
+.settings-row span { color: #666; }
+.settings-row strong { color: #292344; text-align: right; }
+
+.settings-footer {
+    margin-top: 30px;
+    color: #777;
+    font-size: 13px;
+    text-align: center;
+}
+
+.notice {
+    padding: 12px 15px;
+    border-radius: 8px;
+    background: #f0eaff;
+    color: #5634a5;
+    margin-bottom: 15px;
+    font-size: 13px;
+}
+
+.error-notice { background: #fff0f0; color: #b42338; }
+
+@media(max-width:1000px) {
+    .stats-grid { grid-template-columns: repeat(2,minmax(0,1fr)); }
+    .sidebar { width: 210px; }
+}
+
+@media(max-width:650px) {
+    .app { flex-direction: column; }
+    .sidebar { width: 100%; padding: 15px; }
+    .brand { padding: 5px 8px 15px; }
+    .sidebar nav { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); }
+    .nav-link { padding: 11px 9px; font-size: 12px; }
+    .main { padding: 16px; }
+    .stats-grid { grid-template-columns: 1fr 1fr; gap: 10px; }
+    .stat-card { padding: 15px; }
+    .stat-value { font-size: 20px; }
+    .form-grid { grid-template-columns: 1fr; }
+    .settings-row { align-items: flex-start; flex-direction: column; gap: 7px; }
+    .settings-row strong { text-align: left; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN PAGE -->
+<section id="loginScreen" class="login-screen">
+    <div class="login-card">
+        <div class="login-logo">💎 StockSphere</div>
+        <p class="login-subtitle">Inventory Management System</p>
+        <h2>Welcome Back!</h2>
+
+        <form id="loginForm">
+            <label class="login-field">
+                Username
+                <input id="loginUsername" type="text"
+                       placeholder="Enter username"
+                       autocomplete="username" required>
+            </label>
+
+            <label class="login-field">
+                Password
+                <input id="loginPassword" type="password"
+                       placeholder="Enter password"
+                       autocomplete="current-password" required>
+            </label>
+
+            <div id="loginError" class="login-error" hidden>
+                Invalid username or password.
+            </div>
+
+            <button type="submit" class="login-button">Sign In →</button>
+        </form>
+
+        <div class="login-footer">
+            Demo login: admin / admin123
+        </div>
+    </div>
+</section>
+
+<!-- INVENTORY APP: HIDDEN UNTIL LOGIN -->
+<div class="app" id="inventoryApp" hidden>
+
+    <aside class="sidebar">
+        <div class="brand">💎 StockSphere</div>
+        <nav>
+            <button class="nav-link active" data-page="dashboard" onclick="showPage('dashboard')">📊 Dashboard</button>
+            <button class="nav-link" data-page="products" onclick="showPage('products')">📦 Products</button>
+            <button class="nav-link" data-page="suppliers" onclick="showPage('suppliers')">🏭 Suppliers</button>
+            <button class="nav-link" data-page="alerts" onclick="showPage('alerts')">🔔 Stock Alerts</button>
+            <button class="nav-link" data-page="reports" onclick="showPage('reports')">📈 Reports</button>
+            <button class="nav-link" data-page="history" onclick="showPage('history')">🕘 Stock History</button>
+            <button class="nav-link" data-page="settings" onclick="showPage('settings')">⚙️ Settings</button>
+        </nav>
+    </aside>
+
+    <main class="main">
+        <header class="topbar">
+            <span class="user-info" id="userInfo">👤 admin</span>
+            <button class="logout" onclick="logout()">Log out</button>
+        </header>
+
+        <div id="globalMessage" hidden></div>
+
+        <!-- DASHBOARD -->
+        <section id="dashboardPage">
+            <div class="page-header">
+                <h1>Inventory Dashboard</h1>
+                <p>Welcome back! Here's your stock overview.</p>
+            </div>
+
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-label">📦 Total Products</div><div class="stat-value" id="dashboardProducts">0</div></div>
+                <div class="stat-card"><div class="stat-label">📊 Total Stock Units</div><div class="stat-value" id="dashboardUnits">0</div></div>
+                <div class="stat-card"><div class="stat-label">🔔 Low Stock Alerts</div><div class="stat-value" id="dashboardLowStock">0</div></div>
+                <div class="stat-card"><div class="stat-label">💰 Total Stock Value</div><div class="stat-value" id="dashboardValue">₹0</div></div>
+            </div>
+
+            <div class="panel">
+                <div class="panel-heading">
+                    <h2>📦 Recent Products</h2>
+                    <button class="btn btn-primary" onclick="showPage('products')">View Products</button>
+                </div>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>ID</th><th>Product Name</th><th>Category</th><th>Stock</th><th>Price</th></tr></thead>
+                        <tbody id="dashboardProductRows"><tr><td colspan="5" class="empty-message">Loading products...</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- PRODUCTS -->
+        <section id="productsPage" hidden>
+            <div class="page-header"><h1>📦 Products</h1><p>Manage your inventory products and stock quantities.</p></div>
+
+            <div class="panel">
+                <div class="panel-heading"><h2 id="productFormTitle">Add Product</h2></div>
+                <form id="productForm">
+                    <input type="hidden" id="productId">
+                    <div class="form-grid">
+                        <label class="form-field">Product Name<input id="productName" required placeholder="Enter product name"></label>
+                        <label class="form-field">Category<input id="productCategory" required placeholder="Enter category"></label>
+                        <label class="form-field">Stock<input id="productQuantity" type="number" min="0" step="1" required placeholder="Enter stock quantity"></label>
+                        <label class="form-field">Price (₹)<input id="productPrice" type="number" min="0" step="0.01" required placeholder="Enter price"></label>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="productSubmitButton">Add Product</button>
+                        <button type="button" class="btn btn-secondary" onclick="resetProductForm()">Clear</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="panel">
+                <div class="panel-heading"><h2>Product List</h2><button class="btn btn-secondary" onclick="loadProducts()">↻ Refresh</button></div>
+                <div class="toolbar"><input class="search" id="productSearch" placeholder="Search products..." oninput="renderProducts()"></div>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>ID</th><th>Name</th><th>Category</th><th>Stock</th><th>Price</th><th>Stock Status</th><th>Action</th></tr></thead>
+                        <tbody id="productRows"><tr><td colspan="7" class="empty-message">Loading products...</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- SUPPLIERS -->
+        <section id="suppliersPage" hidden>
+            <div class="page-header"><h1>🏭 Suppliers</h1><p>Manage supplier contact and company information.</p></div>
+
+            <div class="panel">
+                <div class="panel-heading"><h2 id="supplierFormTitle">Add Supplier</h2></div>
+                <form id="supplierForm">
+                    <input type="hidden" id="supplierId">
+                    <div class="form-grid">
+                        <label class="form-field">Name<input id="supplierName" required placeholder="Supplier name"></label>
+                        <label class="form-field">Company<input id="supplierCompany" required placeholder="Company name"></label>
+                        <label class="form-field">Phone<input id="supplierPhone" placeholder="Phone number"></label>
+                        <label class="form-field">Email<input id="supplierEmail" type="email" placeholder="Email address"></label>
+                        <label class="form-field">Address<input id="supplierAddress" placeholder="Address"></label>
+                        <label class="form-field">Product Purchased<input id="supplierProduct" placeholder="Product purchased"></label>
+                    </div>
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-primary" id="supplierSubmitButton">Add Supplier</button>
+                        <button type="button" class="btn btn-secondary" onclick="resetSupplierForm()">Clear</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="panel">
+                <div class="panel-heading"><h2>Supplier List</h2><button class="btn btn-secondary" onclick="loadSuppliers()">↻ Refresh</button></div>
+                <div class="toolbar"><input class="search" id="supplierSearch" placeholder="Search suppliers..." oninput="renderSuppliers()"></div>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>Name</th><th>Company</th><th>Phone</th><th>Email</th><th>Address</th><th>Product Purchased</th><th>Action</th></tr></thead>
+                        <tbody id="supplierRows"><tr><td colspan="7" class="empty-message">Loading suppliers...</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- STOCK ALERTS -->
+        <section id="alertsPage" hidden>
+            <div class="page-header"><h1>🔔 Stock Alerts</h1><p>Monitor products with low stock quantities.</p></div>
+            <div class="panel">
+                <div class="panel-heading"><h2>Low Stock Products</h2><button class="btn btn-secondary" onclick="renderAlerts()">↻ Refresh</button></div>
+                <p class="notice">Products with stock quantity of 10 or less are shown as low stock.</p>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>Product</th><th>Category</th><th>Current Stock</th><th>Status</th></tr></thead>
+                        <tbody id="alertRows"><tr><td colspan="4" class="empty-message">Loading alerts...</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- REPORTS -->
+        <section id="reportsPage" hidden>
+            <div class="page-header"><h1>📈 Inventory Reports</h1><p>View and export inventory summaries.</p></div>
+            <div class="stats-grid">
+                <div class="stat-card"><div class="stat-label">Total Products</div><div class="stat-value" id="reportProducts">0</div></div>
+                <div class="stat-card"><div class="stat-label">Total Stock Units</div><div class="stat-value" id="reportUnits">0</div></div>
+                <div class="stat-card"><div class="stat-label">Low Stock Products</div><div class="stat-value" id="reportLowStock">0</div></div>
+                <div class="stat-card"><div class="stat-label">Total Stock Value</div><div class="stat-value" id="reportValue">₹0</div></div>
+            </div>
+            <div class="panel">
+                <div class="panel-heading"><h2>Inventory Summary</h2><button class="btn btn-primary" onclick="downloadCSVReport()">⬇ Download CSV Report</button></div>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>ID</th><th>Product</th><th>Category</th><th>Stock</th><th>Price</th><th>Total Value</th></tr></thead>
+                        <tbody id="reportRows"><tr><td colspan="6" class="empty-message">Loading report...</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- STOCK HISTORY -->
+        <section id="historyPage" hidden>
+            <div class="page-header"><h1>🕘 Stock History</h1><p>Track product stock changes and inventory activities.</p></div>
+            <div class="panel">
+                <div class="panel-heading"><h2>Stock History Records</h2><button class="btn btn-secondary" onclick="loadHistory()">↻ Refresh</button></div>
+                <p id="historyCount" class="notice">Loading stock history...</p>
+                <div class="table-wrap">
+                    <table>
+                        <thead><tr><th>Date &amp; Time</th><th>Product</th><th>Action</th><th>Previous Quantity</th><th>New Quantity</th></tr></thead>
+                        <tbody id="historyRows"><tr><td colspan="5" class="empty-message">Loading stock history...</td></tr></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- SETTINGS -->
+        <section id="settingsPage" hidden>
+            <div class="page-header"><h1>Settings</h1><p>Application information.</p></div>
+            <div class="settings-card">
+                <h2>⚙️ Settings</h2>
+                <div class="settings-row"><span>Application</span><strong>StockSphere</strong></div>
+                <div class="settings-row"><span>Backend</span><strong>Spring Boot</strong></div>
+                <div class="settings-row"><span>Database</span><strong>MySQL</strong></div>
+                <div class="settings-row"><span>Currency</span><strong>Indian Rupees (₹)</strong></div>
+            </div>
+            <footer class="settings-footer">© 2026 StockSphere | Inventory Management System</footer>
+        </section>
+    </main>
+</div>
+
+<script>
+const PRODUCT_API = "/api/products";
+const HISTORY_API = "/api/products/history";
+const SUPPLIER_API = "/api/suppliers";
+
+/* DEMO LOGIN - NOT SECURE BACKEND AUTHENTICATION */
+const DEMO_USERNAME = "admin";
+const DEMO_PASSWORD = "admin123";
+
+let products = [];
+let suppliers = [];
+let historyRecords = [];
+
+const byId = id => document.getElementById(id);
+
+function escapeHTML(value) {
+    return String(value ?? "").replace(/[&<>"']/g, char => ({
+        "&": "&amp;",
+        "<": "&lt;",
+        ">": "&gt;",
+        '"': "&quot;",
+        "'": "&#39;"
+    })[char]);
+}
+
+function money(value) {
+    return Number(value || 0).toLocaleString("en-IN", {
+        style: "currency",
+        currency: "INR",
+        maximumFractionDigits: 2
+    });
+}
+
+function number(value) {
+    return Number(value || 0).toLocaleString("en-IN");
+}
+
+function showMessage(message, isError = false) {
+    const element = byId("globalMessage");
+    element.textContent = message;
+    element.className = isError ? "notice error-notice" : "notice";
+    element.hidden = false;
+}
+
+function clearMessage() {
+    byId("globalMessage").hidden = true;
+}
+
+async function apiRequest(url, options = {}) {
+    const response = await fetch(url, {
+        ...options,
+        headers: {
+            ...(options.body ? {"Content-Type": "application/json"} : {}),
+            ...(options.headers || {})
+        }
+    });
+
+    if (!response.ok) {
+        const errorText = await response.text();
+        throw new Error(errorText || `Request failed (${response.status})`);
+    }
+
+    if (response.status === 204) return null;
+
+    const text = await response.text();
+    return text ? JSON.parse(text) : null;
+}
+
+/* LOGIN */
+byId("loginForm").addEventListener("submit", async event => {
+    event.preventDefault();
+
+    const username = byId("loginUsername").value.trim();
+    const password = byId("loginPassword").value;
+
+    if (username !== DEMO_USERNAME || password !== DEMO_PASSWORD) {
+        byId("loginError").textContent = "Invalid username or password.";
+        byId("loginError").hidden = false;
+        return;
+    }
+
+    byId("loginError").hidden = true;
+    byId("loginScreen").hidden = true;
+    byId("inventoryApp").hidden = false;
+    byId("userInfo").textContent = "👤 " + username;
+
+    showPage("dashboard");
+});
+
+function logout() {
+    if (!confirm("Are you sure you want to log out?")) return;
+
+    byId("inventoryApp").hidden = true;
+    byId("loginScreen").hidden = false;
+    byId("loginForm").reset();
+    byId("loginError").hidden = true;
+    byId("loginUsername").focus();
+}
+
+/* PAGE NAVIGATION */
+function showPage(page) {
+    clearMessage();
+
+    const pages = [
+        "dashboard", "products", "suppliers",
+        "alerts", "reports", "history", "settings"
+    ];
+
+    pages.forEach(name => {
+        byId(name + "Page").hidden = name !== page;
+    });
+
+    document.querySelectorAll(".nav-link").forEach(link => {
+        link.classList.toggle("active", link.dataset.page === page);
+    });
+
+    if (page === "dashboard" || page === "products") {
+        loadProducts();
+    } else if (page === "suppliers") {
+        loadSuppliers();
+    } else if (page === "alerts" || page === "reports") {
+        loadProducts();
+    } else if (page === "history") {
+        loadHistory();
+    }
+}
+
+/* PRODUCTS */
+async function loadProducts() {
+    try {
+        const result = await apiRequest(PRODUCT_API);
+        products = Array.isArray(result) ? result : [];
+
+        renderProducts();
+        renderDashboard();
+        renderAlerts();
+        renderReports();
+    } catch (error) {
+        console.error("Product loading error:", error);
+        byId("productRows").innerHTML =
+            `<tr><td colspan="7" class="empty-message">Unable to load products. Check the backend.</td></tr>`;
+        byId("dashboardProductRows").innerHTML =
+            `<tr><td colspan="5" class="empty-message">Unable to load products.</td></tr>`;
+        showMessage("Unable to load products. Make sure Spring Boot is running.", true);
+    }
+}
+
+function renderProducts() {
+    const query = (byId("productSearch").value || "").toLowerCase();
+
+    const filtered = products.filter(product =>
+        String(product.name || "").toLowerCase().includes(query) ||
+        String(product.category || "").toLowerCase().includes(query) ||
+        String(product.id || "").includes(query)
+    );
+
+    byId("productRows").innerHTML = filtered.length
+        ? filtered.map(product => {
+            const qty = Number(product.quantity || 0);
+            const low = qty <= 10;
+
+            return `<tr>
+                <td>${escapeHTML(product.id)}</td>
+                <td>${escapeHTML(product.name)}</td>
+                <td>${escapeHTML(product.category)}</td>
+                <td>${number(qty)}</td>
+                <td>${money(product.price)}</td>
+                <td><span class="status ${low ? "status-low" : "status-ok"}">${low ? "Low Stock" : "In Stock"}</span></td>
+                <td>
+                    <button class="btn btn-secondary btn-small" onclick="editProduct(${Number(product.id)})">Edit</button>
+                    <button class="btn btn-danger btn-small" onclick="deleteProduct(${Number(product.id)})">Delete</button>
+                </td>
+            </tr>`;
+        }).join("")
+        : `<tr><td colspan="7" class="empty-message">No products found.</td></tr>`;
+}
+
+function renderDashboard() {
+    const totalUnits = products.reduce((sum, p) => sum + Number(p.quantity || 0), 0);
+    const lowStock = products.filter(p => Number(p.quantity || 0) <= 10).length;
+    const totalValue = products.reduce((sum, p) =>
+        sum + Number(p.quantity || 0) * Number(p.price || 0), 0);
+
+    byId("dashboardProducts").textContent = number(products.length);
+    byId("dashboardUnits").textContent = number(totalUnits);
+    byId("dashboardLowStock").textContent = number(lowStock);
+    byId("dashboardValue").textContent = money(totalValue);
+
+    byId("dashboardProductRows").innerHTML = products.length
+        ? [...products].slice(-5).reverse().map(p => `
+            <tr>
+                <td>${escapeHTML(p.id)}</td>
+                <td>${escapeHTML(p.name)}</td>
+                <td>${escapeHTML(p.category)}</td>
+                <td>${number(p.quantity)}</td>
+                <td>${money(p.price)}</td>
+            </tr>`).join("")
+        : `<tr><td colspan="5" class="empty-message">No products added yet.</td></tr>`;
+}
+
+byId("productForm").addEventListener("submit", async event => {
+    event.preventDefault();
+
+    const id = byId("productId").value;
+    const product = {
+        name: byId("productName").value.trim(),
+        category: byId("productCategory").value.trim(),
+        quantity: Number(byId("productQuantity").value),
+        price: Number(byId("productPrice").value)
+    };
+
+    try {
+        if (id) {
+            await apiRequest(`${PRODUCT_API}/${encodeURIComponent(id)}`, {
+                method: "PUT", body: JSON.stringify(product)
+            });
+            showMessage("Product updated successfully.");
+        } else {
+            await apiRequest(PRODUCT_API, {
+                method: "POST", body: JSON.stringify(product)
+            });
+            showMessage("Product added successfully.");
+        }
+
+        resetProductForm();
+        await loadProducts();
+    } catch (error) {
+        console.error(error);
+        showMessage("Unable to save product. Check the backend and try again.", true);
+    }
+});
+
+function editProduct(id) {
+    const p = products.find(item => Number(item.id) === Number(id));
+    if (!p) return;
+
+    byId("productId").value = p.id;
+    byId("productName").value = p.name || "";
+    byId("productCategory").value = p.category || "";
+    byId("productQuantity").value = p.quantity ?? 0;
+    byId("productPrice").value = p.price ?? 0;
+    byId("productFormTitle").textContent = "Edit Product";
+    byId("productSubmitButton").textContent = "Update Product";
+
+    window.scrollTo({top: 0, behavior: "smooth"});
+}
+
+async function deleteProduct(id) {
+    if (!confirm("Are you sure you want to delete this product?")) return;
+
+    try {
+        await apiRequest(`${PRODUCT_API}/${encodeURIComponent(id)}`, {method: "DELETE"});
+        showMessage("Product deleted successfully.");
+        await loadProducts();
+    } catch (error) {
+        console.error(error);
+        showMessage("Unable to delete product.", true);
+    }
+}
+
+function resetProductForm() {
+    byId("productForm").reset();
+    byId("productId").value = "";
+    byId("productFormTitle").textContent = "Add Product";
+    byId("productSubmitButton").textContent = "Add Product";
+}
+
+/* SUPPLIERS */
+async function loadSuppliers() {
+    try {
+        const result = await apiRequest(SUPPLIER_API);
+        suppliers = Array.isArray(result) ? result : [];
+        renderSuppliers();
+    } catch (error) {
+        console.error("Supplier loading error:", error);
+        byId("supplierRows").innerHTML =
+            `<tr><td colspan="7" class="empty-message">Unable to load suppliers. Check the supplier backend API.</td></tr>`;
+        showMessage("Unable to load suppliers. Verify /api/suppliers.", true);
+    }
+}
+
+function renderSuppliers() {
+    const query = (byId("supplierSearch").value || "").toLowerCase();
+
+    const filtered = suppliers.filter(s => [
+        s.name, s.company, s.phone, s.email, s.address, s.productSupplied
+    ].some(value => String(value || "").toLowerCase().includes(query)));
+
+    byId("supplierRows").innerHTML = filtered.length
+        ? filtered.map(s => `
+            <tr>
+                <td>${escapeHTML(s.name)}</td>
+                <td>${escapeHTML(s.company)}</td>
+                <td>${escapeHTML(s.phone)}</td>
+                <td>${escapeHTML(s.email)}</td>
+                <td>${escapeHTML(s.address)}</td>
+                <td>${escapeHTML(s.productSupplied)}</td>
+                <td>
+                    <button class="btn btn-secondary btn-small" onclick="editSupplier(${Number(s.id)})">Edit</button>
+                    <button class="btn btn-danger btn-small" onclick="deleteSupplier(${Number(s.id)})">Delete</button>
+                </td>
+            </tr>`).join("")
+        : `<tr><td colspan="7" class="empty-message">No suppliers found.</td></tr>`;
+}
+
+byId("supplierForm").addEventListener("submit", async event => {
+    event.preventDefault();
+
+    const id = byId("supplierId").value;
+
+    const supplier = {
+        name: byId("supplierName").value.trim(),
+        company: byId("supplierCompany").value.trim(),
+        phone: byId("supplierPhone").value.trim(),
+        email: byId("supplierEmail").value.trim(),
+        address: byId("supplierAddress").value.trim(),
+        productSupplied: byId("supplierProduct").value.trim()
+    };
+
+    try {
+        if (id) {
+            await apiRequest(`${SUPPLIER_API}/${encodeURIComponent(id)}`, {
+                method: "PUT", body: JSON.stringify(supplier)
+            });
+            showMessage("Supplier updated successfully.");
+        } else {
+            await apiRequest(SUPPLIER_API, {
+                method: "POST", body: JSON.stringify(supplier)
+            });
+            showMessage("Supplier added successfully.");
+        }
+
+        resetSupplierForm();
+        await loadSuppliers();
+    } catch (error) {
+        console.error(error);
+        showMessage("Unable to save supplier. Check the supplier API and field names.", true);
+    }
+});
+
+function editSupplier(id) {
+    const s = suppliers.find(item => Number(item.id) === Number(id));
+    if (!s) return;
+
+    byId("supplierId").value = s.id;
+    byId("supplierName").value = s.name || "";
+    byId("supplierCompany").value = s.company || "";
+    byId("supplierPhone").value = s.phone || "";
+    byId("supplierEmail").value = s.email || "";
+    byId("supplierAddress").value = s.address || "";
+    byId("supplierProduct").value = s.productSupplied || "";
+
+    byId("supplierFormTitle").textContent = "Edit Supplier";
+    byId("supplierSubmitButton").textContent = "Update Supplier";
+    window.scrollTo({top: 0, behavior: "smooth"});
+}
+
+async function deleteSupplier(id) {
+    if (!confirm("Are you sure you want to delete this supplier?")) return;
+
+    try {
+        await apiRequest(`${SUPPLIER_API}/${encodeURIComponent(id)}`, {method: "DELETE"});
+        showMessage("Supplier deleted successfully.");
+        await loadSuppliers();
+    } catch (error) {
+        console.error(error);
+        showMessage("Unable to delete supplier.", true);
+    }
+}
+
+function resetSupplierForm() {
+    byId("supplierForm").reset();
+    byId("supplierId").value = "";
+    byId("supplierFormTitle").textContent = "Add Supplier";
+    byId("supplierSubmitButton").textContent = "Add Supplier";
+}
+
+/* STOCK ALERTS */
+function renderAlerts() {
+    const low = products.filter(p => Number(p.quantity || 0) <= 10);
+
+    byId("alertRows").innerHTML = low.length
+        ? low.map(p => `
+            <tr>
+                <td>${escapeHTML(p.name)}</td>
+                <td>${escapeHTML(p.category)}</td>
+                <td>${number(p.quantity)}</td>
+                <td><span class="status status-low">Low Stock</span></td>
+            </tr>`).join("")
+        : `<tr><td colspan="4" class="empty-message">No low stock products. All stock levels look good!</td></tr>`;
+}
+
+/* REPORTS */
+function renderReports() {
+    const totalUnits = products.reduce((sum, p) => sum + Number(p.quantity || 0), 0);
+    const lowStock = products.filter(p => Number(p.quantity || 0) <= 10).length;
+    const totalValue = products.reduce((sum, p) =>
+        sum + Number(p.quantity || 0) * Number(p.price || 0), 0);
+
+    byId("reportProducts").textContent = number(products.length);
+    byId("reportUnits").textContent = number(totalUnits);
+    byId("reportLowStock").textContent = number(lowStock);
+    byId("reportValue").textContent = money(totalValue);
+
+    byId("reportRows").innerHTML = products.length
+        ? products.map(p => `
+            <tr>
+                <td>${escapeHTML(p.id)}</td>
+                <td>${escapeHTML(p.name)}</td>
+                <td>${escapeHTML(p.category)}</td>
+                <td>${number(p.quantity)}</td>
+                <td>${money(p.price)}</td>
+                <td>${money(Number(p.quantity || 0) * Number(p.price || 0))}</td>
+            </tr>`).join("")
+        : `<tr><td colspan="6" class="empty-message">No products available for the report.</td></tr>`;
+}
+
+function downloadCSVReport() {
+    const headers = ["ID","Product","Category","Stock","Price","Total Value"];
+    const rows = products.map(p => [
+        p.id, p.name, p.category, p.quantity, p.price,
+        Number(p.quantity || 0) * Number(p.price || 0)
+    ]);
+
+    const csvCell = value => '"' + String(value ?? "").replace(/"/g, '""') + '"';
+    const csv = [headers, ...rows].map(row => row.map(csvCell).join(",")).join("\r\n");
+
+    const blob = new Blob(["\uFEFF" + csv], {type: "text/csv;charset=utf-8;"});
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+
+    link.href = url;
+    link.download = "StockSphere_Inventory_Report.csv";
+    document.body.appendChild(link);
+    link.click();
+    link.remove();
+    URL.revokeObjectURL(url);
+}
+
+/* STOCK HISTORY */
+async function loadHistory() {
+    byId("historyCount").textContent = "Loading stock history...";
+    byId("historyRows").innerHTML =
+        `<tr><td colspan="5" class="empty-message">Loading stock history...</td></tr>`;
+
+    try {
+        const result = await apiRequest(HISTORY_API);
+        historyRecords = Array.isArray(result) ? result : [];
+
+        historyRecords.sort((a, b) =>
+            new Date(b.actionDate || b.dateTime || b.timestamp || b.createdAt || 0) -
+            new Date(a.actionDate || a.dateTime || a.timestamp || a.createdAt || 0)
+        );
+
+        renderHistory();
+    } catch (error) {
+        console.error("Stock history loading error:", error);
+        byId("historyCount").textContent = "Unable to load stock history.";
+        byId("historyRows").innerHTML =
+            `<tr><td colspan="5" class="empty-message">Could not load stock history. Verify the backend history endpoint.</td></tr>`;
+    }
+}
+
+function renderHistory() {
+    byId("historyCount").textContent =
+        `Showing ${historyRecords.length} stock history record(s).`;
+
+    byId("historyRows").innerHTML = historyRecords.length
+        ? historyRecords.map(item => {
+            const rawDate = item.actionDate ?? item.dateTime ??
+                item.timestamp ?? item.createdAt ?? item.createdDate ?? item.date;
+
+            let formattedDate = "—";
+            if (rawDate) {
+                const date = new Date(rawDate);
+                if (!Number.isNaN(date.getTime())) formattedDate = date.toLocaleString("en-IN");
+            }
+
+            const productName = item.productName ?? item.product?.name ?? item.name ?? "—";
+            const action = item.action ?? item.actionType ?? "—";
+            const previousQuantity = item.previousQuantity ?? item.oldQuantity ?? 0;
+            const newQuantity = item.newQuantity ?? item.quantity ?? 0;
+
+            return `<tr>
+                <td>${escapeHTML(formattedDate)}</td>
+                <td>${escapeHTML(productName)}</td>
+                <td>${escapeHTML(action)}</td>
+                <td>${number(previousQuantity)}</td>
+                <td>${number(newQuantity)}</td>
+            </tr>`;
+        }).join("")
+        : `<tr><td colspan="5" class="empty-message">No stock history records found. Add or update a product to create a record.</td></tr>`;
+}
+</script>
+</body>
+</html>

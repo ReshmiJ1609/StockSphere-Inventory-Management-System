@@ -1,3 +1,4 @@
+
 package jar;
 
 import jakarta.persistence.Entity;
@@ -16,7 +17,6 @@ public class Product {
     private String category;
     private int quantity;
     private double price;
-    private int minimumStock;
 
     public Product() {
     }
@@ -55,13 +55,5 @@ public class Product {
 
     public void setPrice(double price) {
         this.price = price;
-    }
-
-    public int getMinimumStock() {
-        return minimumStock;
-    }
-
-    public void setMinimumStock(int minimumStock) {
-        this.minimumStock = minimumStock;
     }
 }
