@@ -529,6 +529,494 @@ tbody tr:hover {
         justify-content: flex-end;
     }
 }
+
+/* StockSphere - Glassmorphism Theme */
+:root {
+  --glass-bg: rgba(255, 255, 255, 0.12);
+  --glass-border: rgba(255, 255, 255, 0.22);
+  --purple: #8b5cf6;
+  --blue: #3b82f6;
+  --text: #f8faff;
+}
+
+body {
+  background: linear-gradient(135deg, #100c2a, #182b59, #392064);
+  background-attachment: fixed;
+  color: var(--text);
+}
+
+.sidebar,
+.card,
+.stat-card,
+.dashboard-card,
+.modal-content,
+.panel,
+.topbar,
+.login-card {
+  background: var(--glass-bg);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid var(--glass-border);
+  border-radius: 18px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+}
+
+button {
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  background: linear-gradient(135deg, var(--purple), var(--blue));
+  color: white;
+  padding: 10px 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 22px rgba(99, 102, 241, 0.4);
+}
+
+input,
+select,
+textarea {
+  background: rgba(255, 255, 255, 0.08);
+  color: inherit;
+  border: 1px solid var(--glass-border);
+  border-radius: 10px;
+  padding: 10px 12px;
+  outline: none;
+}
+
+input:focus,
+select:focus,
+textarea:focus {
+  border-color: #a78bfa;
+  box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.18);
+}
+
+table {
+  border-collapse: collapse;
+  width: 100%;
+}
+
+th {
+  background: rgba(139, 92, 246, 0.2);
+  color: #ddd6fe;
+  text-align: left;
+}
+
+th,
+td {
+  padding: 12px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+tr:hover td {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    max-width: 100%;
+  }
+
+  table {
+    display: block;
+    overflow-x: auto;
+  }
+}
+
+/* StockSphere card hover effect */
+.stat-card,
+.panel {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.stat-card:hover,
+.panel:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 35px rgba(139, 92, 246, 0.25);
+}
+
+/* Fix white backgrounds in Products and other pages */
+.panel,
+.stat-card,
+.topbar,
+.sidebar,
+.form-field input,
+.form-field select,
+.search,
+.table-wrap {
+    background-color: rgba(255, 255, 255, 0.08);
+    color: #f8faff;
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+th {
+    background: rgba(139, 92, 246, 0.25);
+    color: #ffffff;
+}
+
+td {
+    color: #f8faff;
+    border-bottom-color: rgba(255, 255, 255, 0.15);
+}
+
+tbody tr:hover {
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.form-field {
+    color: #f8faff;
+}
+
+.form-field input::placeholder,
+.search::placeholder {
+    color: rgba(255, 255, 255, 0.65);
+}
+
+/* Sign-in page glassmorphism improvement */
+#loginScreen {
+    background:
+        radial-gradient(circle at 15% 20%, rgba(139, 92, 246, 0.5), transparent 35%),
+        radial-gradient(circle at 85% 80%, rgba(59, 130, 246, 0.4), transparent 35%),
+        linear-gradient(135deg, #100c2a, #182b59, #392064);
+}
+
+.login-card {
+    background: rgba(255, 255, 255, 0.12);
+    backdrop-filter: blur(22px);
+    -webkit-backdrop-filter: blur(22px);
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+    color: #ffffff;
+}
+
+.login-logo {
+    color: #ffffff;
+    font-size: 32px;
+    letter-spacing: 0.5px;
+}
+
+.login-subtitle,
+.login-card label {
+    color: rgba(255, 255, 255, 0.85);
+}
+
+.login-card h2 {
+    color: #ffffff;
+}
+
+.login-card input {
+    background: rgba(255, 255, 255, 0.1);
+    color: #ffffff;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 11px;
+}
+
+.login-card input::placeholder {
+    color: rgba(255, 255, 255, 0.6);
+}
+
+.login-card input:focus {
+    border-color: #a78bfa;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+}
+
+.login-hint {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+/* Supplier Purchase dropdown theme fix */
+select,
+select option {
+    background-color: #211a46;
+    color: #f8faff;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+select:focus {
+    outline: none;
+    border-color: #a78bfa;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+}
+
+select option {
+    padding: 10px;
+}
+
+/* Supplier and Product dropdown fix */
+.form-field select,
+select {
+    background-color: #211a46 !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.form-field select option,
+select option {
+    background-color: #211a46 !important;
+    color: #ffffff !important;
+}
+
+.form-field select:focus,
+select:focus {
+    border-color: #a78bfa;
+    outline: none;
+}
+
+body {
+    background: #100c2a !important;
+    color: white !important;
+}
+
+/* StockSphere Premium Background */
+body {
+    background: linear-gradient(135deg, #100c2a, #182b59, #392064) !important;
+    background-attachment: fixed !important;
+    color: #f8faff !important;
+}
+
+.stat-card,
+.panel,
+.sidebar,
+.topbar {
+    background: rgba(255, 255, 255, 0.10) !important;
+    border: 1px solid rgba(255, 255, 255, 0.20) !important;
+    backdrop-filter: blur(18px);
+    -webkit-backdrop-filter: blur(18px);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+}
+
+/* Miracle Pink Glassmorphism */
+body {
+    background:
+        radial-gradient(ellipse at 15% 10%, rgba(255, 75, 190, 0.22), transparent 35%),
+        radial-gradient(ellipse at 85% 80%, rgba(150, 75, 255, 0.25), transparent 40%),
+        linear-gradient(135deg, #170d2c, #29113f, #170d35) !important;
+    background-attachment: fixed !important;
+    color: #fff5ff;
+}
+
+.sidebar,
+.topbar,
+.stat-card,
+.panel {
+    background: rgba(255, 210, 245, 0.08) !important;
+    border: 1px solid rgba(255, 155, 230, 0.28) !important;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    box-shadow: 0 8px 32px rgba(255, 60, 190, 0.10);
+}
+
+.brand,
+.user-info {
+    color: #ff9de2;
+}
+
+.nav-link.active {
+    background: linear-gradient(110deg, #f044b8, #9b5cff) !important;
+    color: white !important;
+    box-shadow: 0 0 22px rgba(255, 70, 195, 0.35);
+}
+
+.btn-primary {
+    background: linear-gradient(110deg, #f044b8, #925cff) !important;
+    color: white !important;
+    box-shadow: 0 5px 20px rgba(255, 70, 195, 0.22);
+}
+
+.stat-card,
+.panel {
+    border-radius: 20px;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.stat-card:hover,
+.panel:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 32px rgba(255, 70, 195, 0.18);
+}
+/* StockSphere Neon Login Page */
+
+.login-container,
+.login-card,
+.login-box,
+.login-form-container {
+    background: rgba(25, 10, 38, 0.94) !important;
+    color: #fff0fb !important;
+    border: 1px solid rgba(255, 20, 147, 0.55) !important;
+    border-radius: 22px !important;
+    box-shadow:
+        0 0 20px rgba(255, 20, 147, 0.22),
+        0 0 45px rgba(168, 85, 247, 0.12) !important;
+    backdrop-filter: blur(18px);
+}
+
+.login-container h1,
+.login-container h2,
+.login-card h1,
+.login-card h2,
+.login-box h1,
+.login-box h2,
+.login-form-container h1,
+.login-form-container h2 {
+    color: #ff79d2 !important;
+    text-shadow: 0 0 12px rgba(255, 20, 147, 0.4);
+}
+
+.login-container input,
+.login-card input,
+.login-box input,
+.login-form-container input {
+    background: #160c22 !important;
+    color: #ffffff !important;
+    border: 1px solid #793b91 !important;
+    border-radius: 10px !important;
+}
+
+.login-container input:focus,
+.login-card input:focus,
+.login-box input:focus,
+.login-form-container input:focus {
+    border-color: #ff1493 !important;
+    box-shadow: 0 0 12px rgba(255, 20, 147, 0.3) !important;
+    outline: none;
+}
+
+.login-container label,
+.login-card label,
+.login-box label,
+.login-form-container label {
+    color: #e8c9f7 !important;
+}
+
+.login-container button,
+.login-card button,
+.login-box button,
+.login-form-container button {
+    background: linear-gradient(110deg, #ff1493, #a855f7) !important;
+    color: #ffffff !important;
+    border: none !important;
+    border-radius: 10px !important;
+    box-shadow: 0 0 16px rgba(255, 20, 147, 0.3);
+    transition: all 0.25s ease;
+}
+
+.login-container button:hover,
+.login-card button:hover,
+.login-box button:hover,
+.login-form-container button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 24px rgba(255, 20, 147, 0.55);
+}
+/* Overall Login Page - Pink Glassmorphism Background */
+
+body:has(#loginPage),
+body:has(.login-page),
+body:has(.login-screen) {
+    background:
+        radial-gradient(ellipse at 15% 20%, rgba(255, 255, 255, 0.55), transparent 35%),
+        radial-gradient(ellipse at 85% 75%, rgba(255, 105, 180, 0.35), transparent 40%),
+        linear-gradient(135deg, #ff69b4 0%, #ffb6d9 45%, #e6b3ff 100%) !important;
+    background-attachment: fixed !important;
+    min-height: 100vh;
+}
+
+/* Glass effect for the whole login screen */
+body:has(#loginPage) #loginPage,
+body:has(.login-page) .login-page,
+body:has(.login-screen) .login-screen {
+    background: rgba(255, 255, 255, 0.12) !important;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    min-height: 100vh;
+}
+/* Rich Blue + Pink Glassmorphism */
+
+#loginScreen {
+    background:
+        radial-gradient(
+            circle at 15% 20%,
+            rgba(0, 225, 255, 0.42),
+            transparent 35%
+        ),
+        radial-gradient(
+            circle at 85% 25%,
+            rgba(255, 20, 147, 0.55),
+            transparent 40%
+        ),
+        radial-gradient(
+            circle at 50% 100%,
+            rgba(123, 47, 247, 0.55),
+            transparent 45%
+        ),
+        linear-gradient(
+            135deg,
+            #071a3d 0%,
+            #172554 45%,
+            #4a124f 100%
+        ) !important;
+}
+
+/* Rich transparent glass card */
+
+#loginScreen .login-card {
+    background: rgba(15, 23, 55, 0.48) !important;
+    border: 1px solid rgba(255, 255, 255, 0.28) !important;
+
+    backdrop-filter: blur(25px) saturate(160%) !important;
+    -webkit-backdrop-filter: blur(25px) saturate(160%) !important;
+
+    box-shadow:
+        0 8px 40px rgba(0, 0, 0, 0.25),
+        0 0 25px rgba(255, 20, 147, 0.15),
+        inset 0 1px 1px rgba(255, 255, 255, 0.2) !important;
+}
+
+/* Text colours */
+
+#loginScreen .login-logo {
+    color: #ff8bd1 !important;
+}
+
+#loginScreen .login-subtitle,
+#loginScreen label,
+#loginScreen .login-hint,
+#loginScreen h2 {
+    color: #ffffff !important;
+}
+
+/* Dark glass input fields */
+
+#loginScreen input {
+    background: rgba(255, 255, 255, 0.09) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    border-radius: 12px !important;
+}
+
+#loginScreen input::placeholder {
+    color: rgba(255, 255, 255, 0.62) !important;
+}
+
+/* Neon blue-pink button */
+
+#loginScreen .btn-primary {
+    background: linear-gradient(
+        110deg,
+        #087cf5,
+        #ed168f,
+        #963cf5
+    ) !important;
+
+    color: white !important;
+    border: 1px solid rgba(255, 255, 255, 0.25) !important;
+    box-shadow: 0 0 20px rgba(237, 22, 143, 0.30) !important;
+}
+
 </style>
 </head>
 
