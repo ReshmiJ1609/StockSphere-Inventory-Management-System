@@ -1017,7 +1017,50 @@ body:has(.login-screen) .login-screen {
     box-shadow: 0 0 20px rgba(237, 22, 143, 0.30) !important;
 }
 
+#loginScreen input#loginUsername,
+#loginScreen input#loginPassword {
+    background: rgba(255, 70, 170, 0.35) !important;
+    color: #ffffff !important;
+    border: 1px solid rgba(255, 160, 220, 0.8) !important;
+    border-radius: 14px !important;
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    box-shadow: 0 4px 20px rgba(255, 70, 170, 0.2);
+}
+
+#loginScreen input#loginUsername::placeholder,
+#loginScreen input#loginPassword::placeholder {
+    color: #f5d9ed !important;
+    opacity: 1 !important;
+}
+
+#loginScreen input#loginUsername,
+#loginScreen input#loginPassword {
+    background: rgba(255, 20, 147, 0.30) !important;
+    background-color: rgba(255, 20, 147, 0.30) !important;
+    color: #ffffff !important;
+    -webkit-text-fill-color: #ffffff !important;
+    border: 1px solid rgba(255, 182, 219, 0.9) !important;
+    backdrop-filter: blur(18px) !important;
+    -webkit-backdrop-filter: blur(18px) !important;
+    box-shadow: 0 0 18px rgba(255, 20, 147, 0.20) !important;
+}
+
+#loginScreen input#loginUsername::placeholder,
+#loginScreen input#loginPassword::placeholder {
+    color: #ffe0f2 !important;
+    -webkit-text-fill-color: #ffe0f2 !important;
+    opacity: 1 !important;
+}
+
+#loginScreen input#loginUsername:-webkit-autofill,
+#loginScreen input#loginPassword:-webkit-autofill {
+    -webkit-text-fill-color: #ffffff !important;
+    -webkit-box-shadow: 0 0 0 1000px #713b83 inset !important;
+}
+
 </style>
+
 </head>
 
 <body>

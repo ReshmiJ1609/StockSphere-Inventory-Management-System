@@ -516,3 +516,24 @@ tbody tr:hover {
         text-align: left;
     }
 }
+
+/* PINK-BLUE GRADIENT LOGIN INPUT BOXES */
+#loginScreen input#loginUsername,
+#loginScreen input#loginPassword {
+    background: linear-gradient(
+        135deg,
+        #ff69b4 0%,
+        #a855f7 50%,
+        #38bdf8 100%
+    ) !important;
+    color: white !important;
+    border: 2px solid #ffb6e6 !important;
+    border-radius: 10px !important;
+    padding: 13px !important;
+}
+
+#loginScreen input#loginUsername::placeholder,
+#loginScreen input#loginPassword::placeholder {
+    color: white !important;
+    opacity: 1 !important;
+}
